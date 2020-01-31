@@ -636,12 +636,10 @@ void DX::DeviceResources::ResizeBuffers()
     hr = swapChain.As(&m_swapChain); CHECK_ERR();
     m_stereoEnabled = bHWStereoEnabled;
 
-    // Ensure that DXGI does not queue more than one frame at a time. This both reduces latency and
-    // ensures that the application will only render after each VSync, minimizing power consumption.
-    ComPtr<IDXGIDevice1> dxgiDevice;
-    hr = m_d3dDevice.As(&dxgiDevice); CHECK_ERR();
-    dxgiDevice->SetMaximumFrameLatency(1);
   }
+  ComPtr<IDXGIDevice1> dxgiDevice;
+  hr = m_d3dDevice.As(&dxgiDevice); CHECK_ERR();
+  dxgiDevice->SetMaximumFrameLatency(8);
 }
 
 // These resources need to be recreated every time the window size is changed.
